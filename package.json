@@ -1,0 +1,16 @@
+{
+    "name": "cafe-query",
+    "version": "1.0.1",
+    "description": "",
+    "main": "index.js",
+    "exports": {
+        ".": {
+            "require": "./index.js",
+            "default": "./module.mjs"
+        }
+    },
+    "scripts": {},
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
