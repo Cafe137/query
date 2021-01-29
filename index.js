@@ -1,4 +1,4 @@
-function CafeQueryError(message, code) {
+function CafeQueryError(message) {
     this.name = 'CafeQueryError'
     this.message = message
 }
