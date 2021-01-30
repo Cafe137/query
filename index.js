@@ -25,6 +25,13 @@ function CafeQuery(dataSource) {
             }
             return rows[0]
         },
+        findFirstOrNull: async (query, ...values) => {
+            const [rows] = await dataSource.query(query, values)
+            if (!rows || rows.length === 0) {
+                return null
+            }
+            return rows[0]
+        },
         findAll: async (query, ...values) => {
             const [rows] = await dataSource.query(query, values)
             return rows
