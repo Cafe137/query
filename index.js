@@ -4,6 +4,15 @@ function CafeQueryError(message) {
 }
 CafeQueryError.prototype = Error.prototype
 
+const assertSingle = rows => {
+    if (!rows) {
+        throw new CafeQueryError('Expected single result, got falsy value')
+    }
+    if (rows.length !== 1) {
+        throw new CafeQueryError('Expected single result, got length: ' + rows.length)
+    }
+}
+
 function CafeQuery(dataSource) {
     return {
         expectNone: async (query, ...values) => {
@@ -17,12 +26,7 @@ function CafeQuery(dataSource) {
         },
         findOne: async (query, ...values) => {
             const [rows] = await dataSource.query(query, values)
-            if (!rows) {
-                throw new CafeQueryError('Expected single result, got falsy value')
-            }
-            if (rows.length !== 1) {
-                throw new CafeQueryError('Expected single result, got length: ' + rows.length)
-            }
+            assertSingle(rows)
             return rows[0]
         },
         findFirstOrNull: async (query, ...values) => {
@@ -38,7 +42,8 @@ function CafeQuery(dataSource) {
         },
         count: async (query, ...values) => {
             const [rows] = await dataSource.query(query, values)
-            return rows.length
+            assertSingle(rows)
+            return rows[0]['COUNT(*)']
         },
         query: async (query, ...values) => {
             const [rows] = await dataSource.query(query, values)
