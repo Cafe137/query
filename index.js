@@ -36,6 +36,10 @@ function CafeQuery(dataSource) {
             const [rows] = await dataSource.query(query, values)
             return rows
         },
+        count: async (query, ...values) => {
+            const [rows] = await dataSource.query(query, values)
+            return rows.length
+        },
         query: async (query, ...values) => {
             const [rows] = await dataSource.query(query, values)
             return rows
